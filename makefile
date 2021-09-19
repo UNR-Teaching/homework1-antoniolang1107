@@ -1,10 +1,8 @@
-todomanager: main.cpp linkedlist.o node.o
-	g++ -std=c++11 main.cpp
-linkedlist.o: linkedlist.cpp linkedlist.h
-	g++ -c std=c++11 linkedlist.cpp
+todomanager: driver.o
+	g++ driver.o -o todomanager
 
-node.o: node.cpp node.h
-	g++ -c std=c++11 node.cpp
+driver.o: driver.cpp linkedlist.h node.h
+	g++ -c -std=c++11 driver.cpp
 
 clean:
 	rm *.o todomanager
