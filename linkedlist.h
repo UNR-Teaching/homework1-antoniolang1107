@@ -13,17 +13,18 @@ class LinkedList: public ListInterface<ItemType> {
 private:
     Node<ItemType>* headPtr;
     int itemCount;
+    Node<ItemType>* getNodeAt(int position) const;
+    bool isValid(int position) const;
 
 public:
     LinkedList();
-    int getCurrentSize() const;
+    int getLength() const;
     bool isEmpty() const;
-    bool add(const ItemType& newEntry);
-    bool remove(const ItemType& newEntry);
+    bool insert(int newPosition, const ItemType& newEntry);
+    bool remove(int position);
     void clear();
-    int getFrequencyOf(const ItemType& newEntry) const;
-    bool contains(const ItemType& newEntry) const;
-    vector<ItemType> toVector() const;
+    ItemType getEntry(int position) const;
+    ItemType replace(int position, ItemType& newEntry);
     ~LinkedList();
 };  
 

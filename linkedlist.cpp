@@ -5,48 +5,76 @@ LinkedList<ItemType>::LinkedList() {
 }
 
 template<class ItemType>
-int LinkedList<ItemType>::getCurrentSize() const {
-    return itemCount;
-}
-
-template<class ItemType> bool LinkedList<ItemType>::isEmpty() const {
-    return itemCount == 0;
-}
-
-template<class ItemType> bool LinkedList<ItemType>::add(const ItemType& newEntry) {
-    Node<ItemType>* newNodePtr = new Node<ItemType>();
-    newNodePtr->setItem(newEntry);
-    newNodePtr->setNext(headPtr);
-    headPtr = newNodePtr;
-    itemCount++;
-    return true;
+bool LinkedList<ItemType>::isValid(int position) const {
+    return position > 0 && position < itemCount+1;
 }
 
 template<class ItemType>
-bool LinkedList<ItemType>::remove(const ItemType& anEntry) {
-    bool found = false;
+Node<ItemType>* LinkedList<ItemType>::getNodeAt(int position) const {
+    if (isValid(position)) {
     Node<ItemType>* curPtr = headPtr;
-    
-    //find object
-    while (!found && (curPtr != nullptr)) {
-        if(curPtr->getItem() == anEntry) {
-            found = true;
-        }
-        else {
+
+        for (int i = 1; i <= position && curPtr != nullptr; i++) {
             curPtr = curPtr->getNext();
         }
+
+        return curPtr;
     }
-    
-    //swap with last item
-    if (found){
-        curPtr->setItem(headPtr->getItem());
-        Node<ItemType>* nodeToDeletePtr = headPtr;
-        nodeToDeletePtr->setNext(nullptr);
-        delete nodeToDeletePtr;
-        nodeToDeletePtr = nullptr;
-        itemCount--;
+
+    return nullptr;
+}
+
+template<class ItemType>
+int LinkedList<ItemType>::getLength() const {
+    return itemCount;
+}
+
+template<class ItemType>
+bool LinkedList<ItemType>::isEmpty() const {
+    return itemCount == 0;
+}
+
+template<class ItemType>
+bool LinkedList<ItemType>::insert(int newPosition, const ItemType& newEntry) {
+    Node<ItemType>* tempPtr;
+    Node<ItemType>* newNodePtr = new Node<ItemType>();
+    newNodePtr->setItem(newEntry);
+
+    if (newPosition == 1) {
+        tempPtr = headPtr;
+        headPtr = newNodePtr;
+        newNodePtr->setNext(tempPtr);
+
+        itemCount++;
+        return true;
     }
-    return found;
+
+    else {
+        Node<ItemType>* prevNode = getNodeAt(newPosition);
+        tempPtr = prevNode->getNext();
+        prevNode->setNext(newNodePtr);
+        newNodePtr->setNext(tempPtr);
+
+        itemCount++;
+        return true;
+    }
+    return false;
+}
+
+template<class ItemType>
+bool LinkedList<ItemType>::remove(int position) {
+    Node<ItemType>* tempPtr;
+    if (position == 1) {
+        tempPtr = headPtr->getNext();
+        headPtr->~Node();
+        headPtr = tempPtr;
+    }
+
+    else {
+        tempPtr = getNodeAt(position);
+    }
+
+    return false;
 }
         
 template<class ItemType>
@@ -59,34 +87,16 @@ void LinkedList<ItemType>::clear() {
         nodeToDeletePtr = headPtr;
     }
 }
-
 template<class ItemType>
-int LinkedList<ItemType>::getFrequencyOf(const ItemType& newEntry) const{
-    int frequency = 0;
-    Node<ItemType>* curPtr = headPtr;
-    for (int i = 0; i < itemCount && curPtr != nullptr; i++) {
-        if(curPtr->getItem() == newEntry) {
-            frequency++;
-        }
-        curPtr = curPtr->getNext();
-    }
-    return frequency;
+ItemType LinkedList<ItemType>::getEntry(int position) const {
+    return getNodeAt(position)->getItem();
 }
 
 template<class ItemType>
-bool LinkedList<ItemType>::contains(const ItemType& newEntry) const {
-    return getFrequencyOf(newEntry) > 0;
-}
-
-template<class ItemType>
-vector<ItemType> LinkedList<ItemType>::toVector() const {
-    vector<ItemType> bagContents;
-    Node<ItemType>* curPtr = headPtr;
-    for (int i = 0; i < itemCount && curPtr != nullptr; i++) {
-        bagContents.push_back(curPtr->getItem());
-        curPtr = curPtr->getNext();
-    }
-    return bagContents;
+ItemType LinkedList<ItemType>::replace(int position, ItemType& newEntry) {
+    string tempStr = getNodeAt(position)->getItem();
+    getNodeAt(position)->setItem(newEntry);
+    return tempStr;
 }
 
 template<class ItemType>
