@@ -24,7 +24,7 @@ public:
     bool remove(int position);
     void clear();
     ItemType getEntry(int position) const;
-    ItemType replace(int position, ItemType& newEntry);
+    ItemType replace(int position, const ItemType& newEntry);
     ~LinkedList();
 };  
 

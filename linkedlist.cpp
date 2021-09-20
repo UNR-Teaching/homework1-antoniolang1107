@@ -65,9 +65,9 @@ template<class ItemType>
 bool LinkedList<ItemType>::remove(int position) {
     Node<ItemType>* tempPtr;
     if (position == 1) {
-        tempPtr = headPtr->getNext();
-        headPtr->~Node();
-        headPtr = tempPtr;
+        tempPtr = headPtr;
+        headPtr = headPtr->getNext();
+        delete tempPtr;
     }
 
     else {
@@ -86,6 +86,7 @@ void LinkedList<ItemType>::clear() {
         delete nodeToDeletePtr;
         nodeToDeletePtr = headPtr;
     }
+    itemCount = 0;
 }
 template<class ItemType>
 ItemType LinkedList<ItemType>::getEntry(int position) const {
@@ -93,7 +94,7 @@ ItemType LinkedList<ItemType>::getEntry(int position) const {
 }
 
 template<class ItemType>
-ItemType LinkedList<ItemType>::replace(int position, ItemType& newEntry) {
+ItemType LinkedList<ItemType>::replace(int position, const ItemType& newEntry) {
     string tempStr = getNodeAt(position)->getItem();
     getNodeAt(position)->setItem(newEntry);
     return tempStr;

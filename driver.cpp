@@ -2,10 +2,11 @@
 #include "node.h"
 #include "linkedlist.h"
 
+void displayList(LinkedList<string> list);
+
 int main()  {
     int selection, position;
-    //LinkedList<string>::LinkedList<string>* taskList = new LinkedList<string>::LinkedList();
-    LinkedList<string>* taskList = new LinkedList<string>::LinkedList();
+    LinkedList<string> taskList;
     string task;
 
     do {
@@ -20,28 +21,30 @@ int main()  {
 
         switch (selection) {
             case 1:
+                displayList(taskList);
                 std::cout << "What is the priority of your task?" << std::endl;
                 std::cin >> position;
                 std::cin.ignore(1000,'\n');
                 std::cout << "What is your new task" << std::endl;
                 std::getline(std::cin, task);
-                taskList->insert(position, task);
+                taskList.insert(position, task);
                 std::cin.ignore(1000,'\n'); // change
                 break;
 
             case 2:
+                displayList(taskList);
                 std::cout << "Please select which task you've completed:" << std::endl;
                 cin >> position;
-                    // check validity
-                std::cout << "Completed: " << std::endl; // output completed task
-                // remove task
+                std::cout << "Completed: " + taskList.getEntry(position) << std::endl; // output completed task
+                taskList.remove(position);
                 break;
 
             case 3:
+                displayList(taskList);
                 break;
 
             case 4:
-                taskList->clear();
+                taskList.clear();
                 std::cout << "Congradulations! List complete!" << std::endl;
                 break;
 
@@ -52,4 +55,17 @@ int main()  {
     while (selection != 0);
 
     return 0;
+}
+
+void displayList(LinkedList<string> list) {
+    if (list.isEmpty()) {
+        std::cout << "No tasks currently!" << std::endl;
+    }
+    else {
+        for (int i = 1; i < list.getLength(); i++) {
+            std::cout << i << ". " + list.getEntry(i) << std::endl;
+        }
+    }
+
+    
 }
