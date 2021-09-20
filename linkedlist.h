@@ -2,9 +2,10 @@
 #define LINKED_LIST
 
 #include <vector>
-using namespace std;
 #include "listinterface.h"
 #include "node.h"
+
+using namespace std;
 
 template<class ItemType>
 class LinkedList: public ListInterface<ItemType> {
