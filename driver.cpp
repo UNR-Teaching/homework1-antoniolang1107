@@ -7,12 +7,7 @@ void displayList(LinkedList<string> list);
 int main()  {
     int selection, position;
     LinkedList<string> taskList;
-    LinkedList<string> testList;
     string task;
-
-    testList.insert(1, "homework");
-    testList.insert(2, "almost due");
-    testList.insert(2, "hope");
 
     do {
         std::cout << "Menu\n";
@@ -22,7 +17,6 @@ int main()  {
                   << "4. Complete List\n"
                   << "0. Exit\n";
         std::cin >> selection;
-
 
         switch (selection) {
             case 1:
@@ -39,13 +33,13 @@ int main()  {
             case 2:
                 displayList(taskList);
                 std::cout << "Please select which task you've completed:" << std::endl;
-                cin >> position;
+                std::cin >> position;
                 std::cout << "Completed: " + taskList.getEntry(position) << std::endl;
                 taskList.remove(position);
                 break;
 
             case 3:
-                displayList(testList);
+                displayList(taskList);
                 break;
 
             case 4:
