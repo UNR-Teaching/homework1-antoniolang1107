@@ -12,12 +12,10 @@ bool LinkedList<ItemType>::isValid(int position) const {
 template<class ItemType>
 Node<ItemType>* LinkedList<ItemType>::getNodeAt(int position) const {
     if (isValid(position)) {
-    Node<ItemType>* curPtr = headPtr;
-
-        for (int i = 1; i <= position && curPtr != nullptr; i++) {
+        Node<ItemType>* curPtr = headPtr;
+        for (int i = 1; i < position && curPtr != nullptr; i++) {
             curPtr = curPtr->getNext();
         }
-
         return curPtr;
     }
 
@@ -41,16 +39,16 @@ bool LinkedList<ItemType>::insert(int newPosition, const ItemType& newEntry) {
     newNodePtr->setItem(newEntry);
 
     if (newPosition == 1) {
-        tempPtr = headPtr;
         headPtr = newNodePtr;
-        newNodePtr->setNext(tempPtr);
+        newNodePtr->setNext(nullptr);
 
         itemCount++;
         return true;
     }
 
     else {
-        Node<ItemType>* prevNode = getNodeAt(newPosition);
+        Node<ItemType>* prevNode = getNodeAt(newPosition-1);
+        std::cout << prevNode->getItem() << std::endl;
         tempPtr = prevNode->getNext();
         prevNode->setNext(newNodePtr);
         newNodePtr->setNext(tempPtr);

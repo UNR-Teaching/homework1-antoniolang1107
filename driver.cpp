@@ -7,7 +7,12 @@ void displayList(LinkedList<string> list);
 int main()  {
     int selection, position;
     LinkedList<string> taskList;
+    LinkedList<string> testList;
     string task;
+
+    testList.insert(1, "homework");
+    testList.insert(2, "almost due");
+    testList.insert(2, "hope");
 
     do {
         std::cout << "Menu\n";
@@ -24,23 +29,23 @@ int main()  {
                 displayList(taskList);
                 std::cout << "What is the priority of your task?" << std::endl;
                 std::cin >> position;
-                std::cin.ignore(1000,'\n');
+                std::cin.ignore(10,'\n');
                 std::cout << "What is your new task" << std::endl;
                 std::getline(std::cin, task);
                 taskList.insert(position, task);
-                std::cin.ignore(1000,'\n'); // change
+                std::cin.ignore(10, '\n');
                 break;
 
             case 2:
                 displayList(taskList);
                 std::cout << "Please select which task you've completed:" << std::endl;
                 cin >> position;
-                std::cout << "Completed: " + taskList.getEntry(position) << std::endl; // output completed task
+                std::cout << "Completed: " + taskList.getEntry(position) << std::endl;
                 taskList.remove(position);
                 break;
 
             case 3:
-                displayList(taskList);
+                displayList(testList);
                 break;
 
             case 4:
@@ -62,7 +67,7 @@ void displayList(LinkedList<string> list) {
         std::cout << "No tasks currently!" << std::endl;
     }
     else {
-        for (int i = 1; i < list.getLength(); i++) {
+        for (int i = 1; i <= list.getLength(); i++) {
             std::cout << i << ". " + list.getEntry(i) << std::endl;
         }
     }
